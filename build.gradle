@@ -1,0 +1,54 @@
+buildscript {
+	dependencies {
+		// Flyway engine
+		classpath 'org.flywaydb:flyway-core:11.20.0'
+
+		// Flyway MySQL database support
+		classpath 'org.flywaydb:flyway-mysql:11.20.0'
+
+		// MySQL JDBC driver
+		classpath 'com.mysql:mysql-connector-j:9.4.0'
+	}
+}
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.0.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id "org.flywaydb.flyway" version "11.14.1"
+}
+
+group = 'com.menace'
+version = '0.0.1-SNAPSHOT'
+description = 'Helthcare org REST'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+flyway {
+	url = dbUrl
+	user = dbUser
+	password = dbPassword
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
