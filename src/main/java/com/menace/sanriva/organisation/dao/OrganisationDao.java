@@ -44,6 +44,59 @@ public class OrganisationDao {
         }
     }
 
+    public void insert(
+            String name,
+            String type,
+            String region,
+            String specialization,
+            @Nullable Long cvr,
+            Long sorCode,
+            @Nullable Long parentSorCode,
+            @Nullable Long rootSorCode
+    ) {
+        String sql = """
+            INSERT INTO organisations (
+                name,
+                type,
+                region,
+                specialization,
+                cvr,
+                sor_code,
+                sor_code_parent,
+                sor_code_root
+            ) VALUES (
+                :name,
+                :type,
+                :region,
+                :specialization,
+                :cvr,
+                :sor_code,
+                :sor_code_parent,
+                :sor_code_root
+            )
+            """;
+
+        var params = new MapSqlParameterSource();
+        params.addValue("name", name);
+        params.addValue("type", type);
+        params.addValue("region", region);
+        params.addValue("specialization", specialization);
+        params.addValue("cvr", cvr);
+        params.addValue("sor_code", sorCode);
+        params.addValue("sor_code_parent", parentSorCode);
+        params.addValue("sor_code_root", rootSorCode);
+
+        jdbc.update(sql, params);
+    }
+
+    public Organisation findRootBySorCode(long sorCode) {
+        Organisation organisation = findBySorCode(sorCode);
+        while (organisation != null && organisation.getParentSorCode() != null) {
+            organisation = findBySorCode(organisation.getParentSorCode());
+        }
+        return organisation;
+    }
+
     private static class OrganisationRowMapper implements RowMapper<Organisation> {
 
         @Override
