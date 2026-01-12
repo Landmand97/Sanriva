@@ -4,7 +4,7 @@ CREATE TABLE organisations (
     type VARCHAR(100) NOT NULL,
     region VARCHAR(100) NOT NULL,
     specialization VARCHAR(100),
-    cvr INT NOT NULL,
+    cvr BIGINT,
     sor_code BIGINT NOT NULL,
     sor_code_parent BIGINT,
     sor_code_root BIGINT,

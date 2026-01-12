@@ -1,3 +1,16 @@
 spring:
   application:
     name: sanriva
+
+  config:
+    import: "config.yml"
+
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 5500
+  servlet:
+    context-path: /api
+

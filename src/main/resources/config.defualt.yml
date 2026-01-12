@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: url
+    username: user
+    password: supersecret
+    driver-class-name: com.mysql.cj.jdbc.Driver
